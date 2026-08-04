@@ -1,0 +1,265 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/luisjoarmenta-png/fundamentos-programacion-luisjose/blob/main/carpeta_nueva/ejemplo_carga_dataset_uci.ipy\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "vDQVzK2tM85Z"
+      },
+      "source": [
+        "# Ejemplo: cómo cargar un dataset de UCI en Colab\n",
+        "\n",
+        "Este notebook **no es el proyecto**. Es solo una guía corta para que carguen alguno de los tres datasets propuestos en el `README.md` sin perder tiempo peleándose con la descarga. Copien la celda del dataset que eligieron a su propio notebook y sigan de ahí.\n",
+        "\n",
+        "Usamos el paquete `ucimlrepo`, que es la forma oficial y más simple de traer datasets del repositorio de UCI directo a un DataFrame de pandas, sin andar buscando URLs de CSV ni descomprimiendo archivos a mano."
+      ],
+      "id": "vDQVzK2tM85Z"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "1_Pvq4qfM85e"
+      },
+      "source": [
+        "## 0. Instalar el paquete\n",
+        "\n",
+        "Colab no lo trae instalado por defecto, así que la primera celda siempre es esta."
+      ],
+      "id": "1_Pvq4qfM85e"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Sd3VrcfzM85e"
+      },
+      "outputs": [],
+      "source": [
+        "!pip install ucimlrepo -q"
+      ],
+      "id": "Sd3VrcfzM85e"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "qsCfFV-HM85f"
+      },
+      "source": [
+        "## 1. Elegir y cargar el dataset\n",
+        "\n",
+        "Abajo están las tres opciones del README, cada una con su `id`. Solo necesitan correr **una** de estas tres celdas — la del dataset que elijan para su proyecto."
+      ],
+      "id": "qsCfFV-HM85f"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "P2G11znjM85f"
+      },
+      "source": [
+        "### Opción A · Wine Quality (id=186)"
+      ],
+      "id": "P2G11znjM85f"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "4gofDnp-M85f"
+      },
+      "outputs": [],
+      "source": [
+        "from ucimlrepo import fetch_ucirepo\n",
+        "import pandas as pd\n",
+        "\n",
+        "wine_quality = fetch_ucirepo(id=186)\n",
+        "\n",
+        "# X = variables predictoras, y = variable objetivo (la nota de calidad)\n",
+        "X = wine_quality.data.features\n",
+        "y = wine_quality.data.targets\n",
+        "\n",
+        "# las juntamos en un solo DataFrame para trabajar más cómodo\n",
+        "df = pd.concat([X, y], axis=1)\n",
+        "df.head()"
+      ],
+      "id": "4gofDnp-M85f"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-KM0m8zXM85g"
+      },
+      "source": [
+        "### Opción B · Student Performance (id=320)"
+      ],
+      "id": "-KM0m8zXM85g"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "bDdEFrjrM85g"
+      },
+      "outputs": [],
+      "source": [
+        "from ucimlrepo import fetch_ucirepo\n",
+        "import pandas as pd\n",
+        "\n",
+        "student_performance = fetch_ucirepo(id=320)\n",
+        "\n",
+        "X = student_performance.data.features\n",
+        "y = student_performance.data.targets\n",
+        "\n",
+        "df = pd.concat([X, y], axis=1)\n",
+        "df.head()"
+      ],
+      "id": "bDdEFrjrM85g"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "PkmjXHitM85g"
+      },
+      "source": [
+        "### Opción C · Auto MPG (id=9)"
+      ],
+      "id": "PkmjXHitM85g"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "irZMpiFqM85h"
+      },
+      "outputs": [],
+      "source": [
+        "from ucimlrepo import fetch_ucirepo\n",
+        "import pandas as pd\n",
+        "\n",
+        "auto_mpg = fetch_ucirepo(id=9)\n",
+        "\n",
+        "X = auto_mpg.data.features\n",
+        "y = auto_mpg.data.targets\n",
+        "\n",
+        "df = pd.concat([X, y], axis=1)\n",
+        "df.head()"
+      ],
+      "id": "irZMpiFqM85h"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "02ext4U4M85h"
+      },
+      "source": [
+        "## 2. Ver qué significa cada columna\n",
+        "\n",
+        "`ucimlrepo` también trae la descripción de cada variable — muy útil antes de empezar a analizar, para no adivinar qué es cada columna."
+      ],
+      "id": "02ext4U4M85h"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "jx8tvKk0M85h"
+      },
+      "outputs": [],
+      "source": [
+        "# Cambien la variable según el dataset que hayan elegido arriba\n",
+        "# (wine_quality, student_performance o auto_mpg)\n",
+        "print(wine_quality.variables)"
+      ],
+      "id": "jx8tvKk0M85h"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "SPs3BBNSM85h"
+      },
+      "source": [
+        "## 3. Primera inspección\n",
+        "\n",
+        "Esto ya lo vimos en la Clase 6 y 7 — es el punto de partida de cualquier análisis: forma del dataset, tipos de dato, y si hay valores nulos."
+      ],
+      "id": "SPs3BBNSM85h"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "lF_DcxOPM85i"
+      },
+      "outputs": [],
+      "source": [
+        "print(\"Filas y columnas:\", df.shape)\n",
+        "df.info()"
+      ],
+      "id": "lF_DcxOPM85i"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "tDTmmZzZM85i"
+      },
+      "outputs": [],
+      "source": [
+        "df.describe()"
+      ],
+      "id": "tDTmmZzZM85i"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Vrlapdf2M85i"
+      },
+      "outputs": [],
+      "source": [
+        "df.isna().sum()"
+      ],
+      "id": "Vrlapdf2M85i"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "qw1M-U9KM85i"
+      },
+      "source": [
+        "## De acá en adelante, es su proyecto\n",
+        "\n",
+        "Con el dataset ya cargado, el resto lo arman ustedes siguiendo el `README.md`: limpieza, análisis con NumPy y pandas, el punto donde resuelven algo \"a mano\" con comprensiones/diccionarios/`while`/`for`, visualizaciones, y las conclusiones.\n",
+        "\n",
+        "Un tip: antes de limpiar nada, lean bien la descripción de las variables de la celda 2 — les va a ahorrar tiempo entender qué significa cada columna antes de decidir qué hacer con los nulos o los valores raros."
+      ],
+      "id": "qw1M-U9KM85i"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python",
+      "version": "3.11"
+    },
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
